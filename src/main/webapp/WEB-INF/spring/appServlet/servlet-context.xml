@@ -22,7 +22,30 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.nhnent.dispatcher" />
-	
-	
-	
+
+	<!-- locale resolver -->
+	<beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<beans:property name="defaultLocale" value="en" />
+	</beans:bean>
+
+	<!-- config interceptor -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/**" />
+
+			<!-- locale change interceptor -->
+			<beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+				<!--<beans:property name="paramName" value="locale" />-->
+				<beans:property name="paramName" value="lang" />
+			</beans:bean>
+		</interceptor>
+	</interceptors>
+
+	<!-- message source -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<beans:property name="basename">
+			<beans:value>messages</beans:value>
+		</beans:property>
+	</beans:bean>
+
 </beans:beans>
