@@ -54,6 +54,8 @@
 		<beans:property name="templateEngine" ref="thymeleafTemplateEngine" />
 		<beans:property name="characterEncoding" value="UTF-8" />
 		<beans:property name="order" value="1" />
+        <!-- workaround: thymeleaf throws an error when not finding view instead of passing onto the next view resolver -->
+        <beans:property name="excludedViewNames" value="home" />
 	</beans:bean>
 
 	<beans:bean id="thymeleafTemplateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
