@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -19,6 +19,7 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="2" />
 	</beans:bean>
 	
 	<context:component-scan base-package="com.nhnent.dispatcher" />
@@ -47,5 +48,25 @@
 			<beans:value>messages</beans:value>
 		</beans:property>
 	</beans:bean>
+
+	<!-- thymeleaf -->
+	<beans:bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<beans:property name="templateEngine" ref="thymeleafTemplateEngine" />
+		<beans:property name="characterEncoding" value="UTF-8" />
+		<beans:property name="order" value="1" />
+	</beans:bean>
+
+	<beans:bean id="thymeleafTemplateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<beans:property name="templateResolver" ref="thymeleafTemplateResolver" />
+	</beans:bean>
+
+	<beans:bean id="thymeleafTemplateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+		<beans:property name="prefix" value="/WEB-INF/thymeleaf/" />
+		<beans:property name="suffix" value=".html" />
+		<beans:property name="templateMode" value="HTML5" />
+	</beans:bean>
+
+    <!-- org.springframework.web.servlet.mvc.ParameterizableViewController -->
+    <view-controller path="/login" view-name="login" />
 
 </beans:beans>
