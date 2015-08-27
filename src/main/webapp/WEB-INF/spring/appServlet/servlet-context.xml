@@ -3,9 +3,11 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:util="http://www.springframework.org/schema/util"
              xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -40,6 +42,14 @@
 				<beans:property name="paramName" value="lang" />
 			</beans:bean>
 		</interceptor>
+        <interceptor>
+            <mapping path="/**" />
+            <exclude-mapping path="/login" />
+            <exclude-mapping path="/signin" />
+
+            <beans:bean class="com.nhnent.dispatcher.LoginCheckInterceptor" />
+        </interceptor>
+
 	</interceptors>
 
 	<!-- message source -->
@@ -54,8 +64,6 @@
 		<beans:property name="templateEngine" ref="thymeleafTemplateEngine" />
 		<beans:property name="characterEncoding" value="UTF-8" />
 		<beans:property name="order" value="1" />
-        <!-- workaround: thymeleaf throws an error when not finding view instead of passing onto the next view resolver -->
-        <beans:property name="excludedViewNames" value="home" />
 	</beans:bean>
 
 	<beans:bean id="thymeleafTemplateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
@@ -70,5 +78,11 @@
 
     <!-- org.springframework.web.servlet.mvc.ParameterizableViewController -->
     <view-controller path="/login" view-name="login" />
+
+    <!-- id-lang map -->
+    <util:map id="langMap">
+        <beans:entry key="spring" value="ko" />
+        <beans:entry key="summer" value="en" />
+    </util:map>
 
 </beans:beans>

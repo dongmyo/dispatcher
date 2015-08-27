@@ -1,0 +1,21 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+</head>
+<body>
+<h1 th:text="#{title}"></h1>
+
+<p th:text="#{description(${serverTime})}"></p>
+
+<div>
+    <div>User: <span th:text="${session.id}" /></div>
+    <div>Lang: <span th:text="${@langMap.get(session.id)}" /></div>
+</div>
+<br />
+
+<a href="/signout">sign out</a>
+
+</body>
+</html>
